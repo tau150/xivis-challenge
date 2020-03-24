@@ -1,6 +1,10 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 
 
-const ProductDetails = () => <h1> Product details </h1>;
+const ProductDetails = () => (
+  <p><asd /></p>
+);
 
 export default ProductDetails;

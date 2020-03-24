@@ -14,8 +14,8 @@ import PageNoExist from 'pages/PageNoExist';
 function App() {
   return (
     <div className="App">
-      <MainLayout>
-        <Router>
+      <Router>
+        <MainLayout>
           <Switch>
             <Route exact path="/">
               <Products />
@@ -30,10 +30,8 @@ function App() {
               <PageNoExist />
             </Route>
           </Switch>
-        </Router>
-
-
-      </MainLayout>
+        </MainLayout>
+      </Router>
 
     </div>
   );

@@ -8,6 +8,7 @@ import {
   NavbarText,
 } from 'reactstrap';
 import cart from 'assets/images/cart.png';
+import { Link } from 'react-router-dom';
 
 const MainLayout = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +23,9 @@ const MainLayout = ({ children }) => {
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <NavbarText className="ml-auto">
-            <img src={cart} width="30" alt="cart" />
+            <Link to="/cart">
+              <img src={cart} width="30" alt="cart" />
+            </Link>
           </NavbarText>
         </Collapse>
       </Navbar>

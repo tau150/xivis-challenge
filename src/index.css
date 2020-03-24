@@ -22,3 +22,28 @@ a:hover {
   text-decoration: none;
   color: #000;
 }
+
+.custom-select,
+.custom-select:focus {
+  border: 1px solid #777;
+  background-color: transparent;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+button.main-button {
+  background: #fd415f;
+  border: none;
+}
+
+button.main-button:hover {
+  background: #e43a55;
+  border: none;
+}
+
+.icon-disabled {
+  pointer-events: none;
+  color: #777;
+}
