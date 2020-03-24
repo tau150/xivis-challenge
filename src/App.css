@@ -36,3 +36,10 @@
     transform: rotate(360deg);
   }
 }
+.bottom-border {
+  border-bottom: 3px solid red;
+}
+
+.page-not-exist-container h1 {
+  color: red;
+}

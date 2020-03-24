@@ -1,5 +1,4 @@
-import types from '../../constants/types';
-
+import types from 'constants/types';
 
 const initialState = {
   isLoading: false,
@@ -7,13 +6,11 @@ const initialState = {
   errorMessage: null,
 };
 
-const shopReducer = (state = initialState, action) => {
-
+const shop = (state = initialState, action) => {
   switch (action.type) {
-
     default:
       return state;
   }
 };
 
-export default shopReducer;
+export default shop;
