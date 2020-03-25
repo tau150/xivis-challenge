@@ -66,10 +66,12 @@ const ActionsBar = ({
   return (
     <Container className="mt-3">
       <Row>
+        { options.includes('search') && (
         <Col sm="2" className="d-flex align-items-start">
           <Input type="text" value={searchValue} onKeyUp={handleSearchChange} onChange={(e) => setSearchValue(e.target.value)} name="search" placeholder="Buscar..." />
           {searchedValue && <FontAwesomeIcon className="mt-2 ml-2 clickable" icon={faTrash} onClick={() => dispatch(setSearch(null))} />}
         </Col>
+        )}
         { options.includes('order') && (
         <Col sm="3">
           <FormGroup row>

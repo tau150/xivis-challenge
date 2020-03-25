@@ -5,24 +5,22 @@ import { productsOnCartSelector, productsSelector } from 'store/selectors/shop';
 import { Link, useHistory } from 'react-router-dom';
 import { notify } from 'react-notify-toast';
 import {
-  Container, Row, Col, Card, CardBody, CardText, Button, Badge, Modal, ModalHeader, ModalBody, ModalFooter,
+  Container, Row, Col, Card, CardBody, CardText,
+  Button, Badge, Modal, ModalHeader, ModalBody, ModalFooter,
 } from 'reactstrap';
-import './styles/Cart.css';
 import { setProductsAndStock, finalizePurchase } from 'store/actions/shop';
+import ActionBar from 'components/ActionsBar';
+import './styles/Cart.css';
 
 
 const Cart = () => {
   const productsOnCart = useSelector((state) => productsOnCartSelector(state));
   const allProducts = useSelector((state) => productsSelector(state));
-
   const [modal, setModal] = useState(false);
+  const history = useHistory();
+  const dispatch = useDispatch();
 
   const toggle = () => setModal(!modal);
-
-
-  const history = useHistory();
-
-  const dispatch = useDispatch();
 
   const handleClickDeleteFromCart = (product, deleteAll) => {
     const productCopy = { ...product };
@@ -103,6 +101,7 @@ const Cart = () => {
   );
   return (
     <>
+      { productsOnCart.length > 0 && <ActionBar options={['back']} />}
       {productsOnCart.length === 0 && (
       <Card>
         <CardBody>
@@ -117,6 +116,7 @@ const Cart = () => {
       ) }
       <Container>
         <Row>
+
           <Col className="mt-5">
             { productsOnCart.map((product) => renderProductsResume(product)) }
             { productsOnCart.length > 0 && (
