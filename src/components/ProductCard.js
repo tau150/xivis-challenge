@@ -97,7 +97,7 @@ const ProductCard = ({
           { stock > 0 ? (
             <>
               <Input placeholder="0" value={quantityValue} min="1" max={stock} onChange={handleChangeQuantity} type="number" />
-              <Button className="main-button btn-sm" onClick={() => handleClickAddToCart()}>Agregar al carrito</Button>
+              <Button className="main-button btn-sm" onClick={handleClickAddToCart}>Agregar al carrito</Button>
             </>
           ) : (<Button className="btn-sm" disabled>Sin stock</Button>)}
 

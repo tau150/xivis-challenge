@@ -22,11 +22,6 @@ const fetchProductsStart = () => ({
 });
 
 
-export const toggleLoading = () => ({
-  type: types.TOGGLE_LOADING,
-});
-
-
 export const setProductToToSeeDetails = (productWitDetails) => ({
   type: types.SET_PRODUCT_DETAILS,
   payload: {
@@ -40,6 +35,10 @@ const setProductsOnCart = (products) => ({
   payload: {
     products,
   },
+});
+
+export const finalizePurchase = () => ({
+  type: types.FINALIZE_PURCHASE,
 });
 
 export const setSearch = (searchValue) => ({

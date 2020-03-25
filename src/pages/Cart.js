@@ -2,17 +2,20 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { productsOnCartSelector, productsSelector } from 'store/selectors/shop';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { notify } from 'react-notify-toast';
 import {
   Container, Row, Col, Card, CardBody, CardText, Button, Badge,
 } from 'reactstrap';
 import './styles/Cart.css';
-import { setProductsAndStock } from 'store/actions/shop';
+import { setProductsAndStock, finalizePurchase } from 'store/actions/shop';
 
 
 const Cart = () => {
   const productsOnCart = useSelector((state) => productsOnCartSelector(state));
   const allProducts = useSelector((state) => productsSelector(state));
+
+  const history = useHistory();
 
   const dispatch = useDispatch();
 
@@ -57,6 +60,12 @@ const Cart = () => {
     const result = value.toFixed(2) * Number(product.quantity);
     total += result;
     return `$${result.toFixed(2)}`;
+  };
+
+  const handleClickBuyProducts = () => {
+    dispatch(finalizePurchase());
+    notify.show('Compra realizada con éxito', 'success');
+    history.push('/');
   };
 
   const renderProductsResume = (product) => (
@@ -107,11 +116,13 @@ const Cart = () => {
             { productsOnCart.map((product) => renderProductsResume(product)) }
             { productsOnCart.length > 0 && (
             <Card>
-              <CardBody className="cart-product-card-body">
-                <p className="ml-auto total-price">
+              <CardBody className="cart-product-card-body d-flex align-item-center">
+                <Button className="btn btn-sm main-button" onClick={handleClickBuyProducts}> Finalizar compra </Button>
+                <p className="ml-auto total-price m-0">
                   Total: $
                   {total.toFixed(2)}
                 </p>
+
               </CardBody>
             </Card>
             ) }

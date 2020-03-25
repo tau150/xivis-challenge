@@ -32,11 +32,12 @@ const shop = (state = initialState, action) => {
         isLoading: false,
         errorMessage: action.payload.errorMessage,
       };
-    case types.TOGGLE_LOADING:
+
+    case types.FINALIZE_PURCHASE:
       return {
-        ...state,
-        isLoading: !state.isLoading,
+        ...initialState,
       };
+
     case types.SET_PRODUCTS_ON_CART:
       return {
         ...state,
