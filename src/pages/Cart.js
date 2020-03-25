@@ -1,11 +1,11 @@
 /* eslint-disable no-underscore-dangle */
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { productsOnCartSelector, productsSelector } from 'store/selectors/shop';
 import { Link, useHistory } from 'react-router-dom';
 import { notify } from 'react-notify-toast';
 import {
-  Container, Row, Col, Card, CardBody, CardText, Button, Badge,
+  Container, Row, Col, Card, CardBody, CardText, Button, Badge, Modal, ModalHeader, ModalBody, ModalFooter,
 } from 'reactstrap';
 import './styles/Cart.css';
 import { setProductsAndStock, finalizePurchase } from 'store/actions/shop';
@@ -14,6 +14,11 @@ import { setProductsAndStock, finalizePurchase } from 'store/actions/shop';
 const Cart = () => {
   const productsOnCart = useSelector((state) => productsOnCartSelector(state));
   const allProducts = useSelector((state) => productsSelector(state));
+
+  const [modal, setModal] = useState(false);
+
+  const toggle = () => setModal(!modal);
+
 
   const history = useHistory();
 
@@ -117,7 +122,7 @@ const Cart = () => {
             { productsOnCart.length > 0 && (
             <Card>
               <CardBody className="cart-product-card-body d-flex align-item-center">
-                <Button className="btn btn-sm main-button" onClick={handleClickBuyProducts}> Finalizar compra </Button>
+                <Button className="btn btn-sm main-button" onClick={toggle}> Finalizar compra </Button>
                 <p className="ml-auto total-price m-0">
                   Total: $
                   {total.toFixed(2)}
@@ -129,6 +134,19 @@ const Cart = () => {
           </Col>
         </Row>
       </Container>
+
+      <div>
+        <Modal isOpen={modal} toggle={toggle}>
+          <ModalHeader toggle={toggle}>Finalizar compra</ModalHeader>
+          <ModalBody>
+            Seguro desea realizar la compra ?
+          </ModalBody>
+          <ModalFooter>
+            <Button className="bttn-sm main-button" onClick={handleClickBuyProducts}>Aceptar</Button>
+            <Button className="bttn-sm" color="secondary" onClick={toggle}>Cancelar</Button>
+          </ModalFooter>
+        </Modal>
+      </div>
     </>
   );
 };
