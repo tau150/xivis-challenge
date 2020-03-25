@@ -6,6 +6,7 @@ import {
   Route,
 } from 'react-router-dom';
 import MainLayout from 'layouts/MainLayout';
+import Notifications from 'react-notify-toast';
 import Products from 'pages/Products';
 import ProductDetails from 'pages/ProductDetails';
 import Cart from 'pages/Cart';
@@ -14,6 +15,7 @@ import PageNoExist from 'pages/PageNoExist';
 function App() {
   return (
     <div className="App">
+      <Notifications />
       <Router>
         <MainLayout>
           <Switch>

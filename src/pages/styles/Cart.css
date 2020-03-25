@@ -1,0 +1,35 @@
+.cart-product-card-body {
+  display: flex;
+}
+
+.cart-product-card-body img {
+  width: 20px;
+  flex-basis: 15%;
+  align-self: flex-start;
+}
+
+.cart-product-card-body .info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-basis: 60%;
+  margin-left: 3%;
+}
+.cart-product-card-body .info-container p.main-text {
+  font-size: 0.8rem;
+  text-align: left;
+}
+
+.total-price {
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.actions {
+  display: flex;
+  align-self: flex-end;
+}
+
+.actions .badge {
+  margin: 10px;
+}

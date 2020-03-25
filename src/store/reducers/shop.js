@@ -4,6 +4,11 @@ const initialState = {
   isLoading: false,
   products: [],
   errorMessage: null,
+  productWitDetails: {},
+  productsOnCart: [],
+  searchValue: null,
+  order: 'importance',
+  orderDirection: 'asc',
 };
 
 const shop = (state = initialState, action) => {
@@ -18,6 +23,7 @@ const shop = (state = initialState, action) => {
         ...state,
         products: action.payload.products,
         isLoading: false,
+        errorMessage: null,
       };
     case types.GET_PRODUCTS_ERROR:
       return {
@@ -31,6 +37,32 @@ const shop = (state = initialState, action) => {
         ...state,
         isLoading: !state.isLoading,
       };
+    case types.SET_PRODUCTS_ON_CART:
+      return {
+        ...state,
+        productsOnCart: action.payload.products,
+      };
+
+    case types.SET_PRODUCT_DETAILS:
+      return {
+        ...state,
+        productWitDetails: action.payload.productWitDetails,
+      };
+
+    case types.SET_SEARCH:
+      return {
+        ...state,
+        searchValue: action.payload.searchValue,
+      };
+
+    case types.SET_ORDER:
+      return {
+        ...state,
+        order: action.payload.orderValue,
+        orderDirection: action.payload.orderDirection,
+      };
+
+
     default:
       return state;
   }

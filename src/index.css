@@ -43,7 +43,24 @@ button.main-button:hover {
   border: none;
 }
 
+button.main-button:focus {
+  background: #e43a55;
+  border: none;
+  box-shadow: none;
+}
+
 .icon-disabled {
   pointer-events: none;
   color: #777;
+}
+
+.cart-notification {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
 }
