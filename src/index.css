@@ -64,3 +64,14 @@ button.main-button:focus {
   -ms-border-radius: 50%;
   -o-border-radius: 50%;
 }
+
+button.btn-empty,
+button.btn-empty:hover,
+button.btn-empty:focus {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #777;
+  box-shadow: none;
+  outline: none;
+}

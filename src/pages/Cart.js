@@ -1,7 +1,9 @@
 /* eslint-disable no-underscore-dangle */
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { productsOnCartSelector, productsSelector } from 'store/selectors/shop';
+import {
+  productsOnCartSelector, productsSelector, currentPageSelector, numberOfPagesSelector,
+} from 'store/selectors/shop';
 import { Link, useHistory } from 'react-router-dom';
 import { notify } from 'react-notify-toast';
 import {
@@ -16,6 +18,9 @@ import './styles/Cart.css';
 const Cart = () => {
   const productsOnCart = useSelector((state) => productsOnCartSelector(state));
   const allProducts = useSelector((state) => productsSelector(state));
+  const currentPage = useSelector((state) => currentPageSelector(state));
+  const numberOfPages = useSelector((state) => numberOfPagesSelector(state));
+
   const [modal, setModal] = useState(false);
   const history = useHistory();
   const dispatch = useDispatch();
@@ -54,7 +59,7 @@ const Cart = () => {
       updatedProductsOnCart = productsOnCart.filter((prod) => prod.product._id !== product.product._id);
     }
 
-    dispatch(setProductsAndStock(updatedProductsOnCart, updatedProducts));
+    dispatch(setProductsAndStock(updatedProductsOnCart, updatedProducts, numberOfPages, currentPage));
   };
 
   let total = 0;

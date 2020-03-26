@@ -1,10 +1,12 @@
 import fetchProducts from 'services/products';
 import types from 'constants/types';
 
-const getProductsSuccess = (products) => ({
+const getProductsSuccess = (products, numberOfPages, currentPage) => ({
   type: types.GET_PRODUCTS_SUCCESS,
   payload: {
     products,
+    numberOfPages,
+    currentPage,
   },
 });
 
@@ -56,10 +58,16 @@ export const setOrder = (orderValue, orderDirection) => ({
   },
 });
 
+export const setCurrentPage = (currentPage) => ({
+  type: types.SET_CURRENT_PAGE,
+  payload: {
+    currentPage,
+  },
+});
 
-export const setProductsAndStock = (selection, updatedProducts) => async (dispatch) => {
+export const setProductsAndStock = (selection, updatedProducts, numberOfPages, currentPage) => async (dispatch) => {
   dispatch(setProductsOnCart(selection));
-  dispatch(getProductsSuccess(updatedProducts));
+  dispatch(getProductsSuccess(updatedProducts, numberOfPages, currentPage));
 };
 
 
@@ -67,7 +75,9 @@ export const getAllProducts = () => async (dispatch) => {
   try {
     dispatch(fetchProductsStart());
     const result = await fetchProducts();
-    dispatch(getProductsSuccess(result));
+    const numberOfPages = Math.ceil(result.length / 9);
+    const currentPage = 1;
+    dispatch(getProductsSuccess(result, numberOfPages, currentPage));
   } catch (e) {
     dispatch(getProductsError(e.message || 'Ocurrió un error'));
   }

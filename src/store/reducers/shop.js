@@ -9,6 +9,8 @@ const initialState = {
   searchValue: null,
   order: 'importance',
   orderDirection: 'asc',
+  numberOfPages: null,
+  currentPage: null,
 };
 
 const shop = (state = initialState, action) => {
@@ -22,6 +24,9 @@ const shop = (state = initialState, action) => {
       return {
         ...state,
         products: action.payload.products,
+        numberOfPages: action.payload.numberOfPages,
+        currentPage: action.payload.currentPage,
+
         isLoading: false,
         errorMessage: null,
       };
@@ -61,6 +66,12 @@ const shop = (state = initialState, action) => {
         ...state,
         order: action.payload.orderValue,
         orderDirection: action.payload.orderDirection,
+      };
+
+    case types.SET_CURRENT_PAGE:
+      return {
+        ...state,
+        currentPage: action.payload.currentPage,
       };
 
 

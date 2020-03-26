@@ -6,7 +6,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { notify } from 'react-notify-toast';
 import './styles/ProductCard.css';
 import { setProductToToSeeDetails, setProductsAndStock } from 'store/actions/shop';
-import { productsSelector, productsOnCartSelector } from 'store/selectors/shop';
+import {
+  productsSelector, productsOnCartSelector, currentPageSelector, numberOfPagesSelector,
+} from 'store/selectors/shop';
 import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
@@ -23,7 +25,8 @@ const ProductCard = ({
   const dispatch = useDispatch();
   const allProducts = useSelector((state) => productsSelector(state));
   const productsOnCart = useSelector((state) => productsOnCartSelector(state));
-
+  const numberOfPages = useSelector((state) => numberOfPagesSelector(state));
+  const currentPage = useSelector((state) => currentPageSelector(state));
 
   const handleChangeQuantity = (e) => {
     setQuantityValue(Number(e.target.value));
@@ -67,8 +70,7 @@ const ProductCard = ({
     } else {
       updatedProductsOnCart = [{ quantity: quantityValue, product }];
     }
-    const isAdding = true;
-    dispatch(setProductsAndStock(updatedProductsOnCart, updatedProducts, isAdding));
+    dispatch(setProductsAndStock(updatedProductsOnCart, updatedProducts, numberOfPages, currentPage));
     setQuantityValue(1);
     notify.show('Agregado al carrito!', 'success');
   };
@@ -112,7 +114,7 @@ ProductCard.propTypes = {
     _id: PropTypes.string,
     picture: PropTypes.string,
     price: PropTypes.string,
-    stock: PropTypes.string,
+    stock: PropTypes.number,
     name: PropTypes.string,
     description: PropTypes.string,
   }).isRequired,
