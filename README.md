@@ -2,7 +2,7 @@
 
 - Clone the repo, in the project directory run npm install
 - Run npm start
-- Open http://localhost:300 to view in the browser
+- Open http://localhost:3000 to view in the browser
 
 ## Live version
 
