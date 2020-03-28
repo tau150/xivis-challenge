@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { createSelector } from 'reselect';
 import _ from 'lodash';
 
@@ -10,6 +11,27 @@ export const searchedValueSelector = (state) => state.shop.searchValue;
 export const orderSelector = (state) => state.shop.order;
 export const numberOfPagesSelector = (state) => state.shop.numberOfPages;
 export const currentPageSelector = (state) => state.shop.currentPage;
+
+export const productsWithCartComparationSelector = createSelector(
+  productsSelector,
+  productsOnCartSelector,
+  (rawProducts, productsOnCart) => {
+    const productsWithModifiedStock = _.intersectionBy(productsOnCart, rawProducts, '_id');
+
+    if (productsWithModifiedStock.length > 0) {
+      const productsOnCartIds = productsWithModifiedStock.map((product) => product._id);
+      return rawProducts.map((product) => {
+        if (productsOnCartIds.includes(product._id)) {
+          const toReturn = productsWithModifiedStock.find((prod) => prod._id === product._id);
+          return toReturn.product;
+        }
+        return product;
+      });
+    }
+    return rawProducts;
+  },
+);
+
 export const paginationPagesSelector = createSelector(
   numberOfPagesSelector,
   (pages) => {
@@ -23,7 +45,7 @@ export const paginationPagesSelector = createSelector(
 const orderDirection = (state) => state.shop.orderDirection;
 
 export const productsOrderBySelector = createSelector(
-  productsSelector,
+  productsWithCartComparationSelector,
   orderSelector,
   orderDirection,
   currentPageSelector,
@@ -37,7 +59,7 @@ export const productsOrderBySelector = createSelector(
 );
 
 const allProductsOrdered = createSelector(
-  productsSelector,
+  productsWithCartComparationSelector,
   orderSelector,
   orderDirection,
   currentPageSelector,

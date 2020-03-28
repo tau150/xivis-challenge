@@ -4,7 +4,7 @@ import { Container, Row, Col } from 'reactstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProducts } from 'store/actions/shop';
 import {
-  productsSelector, loadingSelector, productsBySearchValueSelector, productsOrderBySelector,
+  productsWithCartComparationSelector, loadingSelector, productsBySearchValueSelector, productsOrderBySelector, productsSelector,
 } from 'store/selectors/shop';
 import ActionsBar from 'components/ActionsBar';
 import MainLoading from 'components/MainLoading';
@@ -13,21 +13,18 @@ import './styles/Products.css';
 
 const Products = () => {
   const dispatch = useDispatch();
-  const products = useSelector((state) => productsSelector(state));
+  const products = useSelector((state) => productsWithCartComparationSelector(state));
   const isLoading = useSelector((state) => loadingSelector(state));
   const filteredProducts = useSelector((state) => productsBySearchValueSelector(state));
   const orderedProducts = useSelector((state) => productsOrderBySelector(state));
   const [viewStyle, setViewStyle] = useState('grid');
 
-
   useEffect(() => {
-    if (products.length === 0) {
-      dispatch(getAllProducts());
-    }
-  }, [products.length, dispatch]);
+    dispatch(getAllProducts());
+  }, []);
 
 
-  if (isLoading) return <MainLoading />;
+  if (isLoading && products.length === 0) return <MainLoading />;
 
   return (
     <div className="mt-5">

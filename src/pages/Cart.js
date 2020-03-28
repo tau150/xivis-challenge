@@ -77,7 +77,7 @@ const Cart = () => {
   };
 
   const renderProductsResume = (product) => (
-    <Card>
+    <Card key={product.product._id}>
       <CardBody className="cart-product-card-body">
         <img className="rounded img-fluid" src={product.product.picture} alt="" />
         <div className="info-container">

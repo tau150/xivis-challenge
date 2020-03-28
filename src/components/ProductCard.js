@@ -7,7 +7,7 @@ import { notify } from 'react-notify-toast';
 import './styles/ProductCard.css';
 import { setProductToToSeeDetails, setProductsAndStock } from 'store/actions/shop';
 import {
-  productsSelector, productsOnCartSelector, currentPageSelector, numberOfPagesSelector,
+  productsWithCartComparationSelector, productsOnCartSelector, currentPageSelector, numberOfPagesSelector,
 } from 'store/selectors/shop';
 import { useHistory } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -20,10 +20,10 @@ const ProductCard = ({
     _id, picture, price, stock, name, description,
   } = product;
 
-  const [quantityValue, setQuantityValue] = useState(1);
+  const [quantityValue, setQuantityValue] = useState(0);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const dispatch = useDispatch();
-  const allProducts = useSelector((state) => productsSelector(state));
+  const allProducts = useSelector((state) => productsWithCartComparationSelector(state));
   const productsOnCart = useSelector((state) => productsOnCartSelector(state));
   const numberOfPages = useSelector((state) => numberOfPagesSelector(state));
   const currentPage = useSelector((state) => currentPageSelector(state));
@@ -39,11 +39,17 @@ const ProductCard = ({
   };
 
   const handleClickAddToCart = () => {
-    if (quantityValue > stock) {
-      notify.show('No hay stock suficiente', 'error');
-      setQuantityValue(1);
+    if (quantityValue === 0) {
+      notify.show('Seleccione cantidad', 'error');
       return;
     }
+
+    if (quantityValue > stock) {
+      notify.show('No hay stock suficiente', 'error');
+      setQuantityValue(0);
+      return;
+    }
+
     let updatedProductsOnCart;
     const updatedProducts = allProducts.map((prod) => {
       const updatedProd = prod;
@@ -65,13 +71,13 @@ const ProductCard = ({
       });
 
       if (!existInArray) {
-        updatedProductsOnCart = [...updatedProductsOnCart, { quantity: quantityValue, product }];
+        updatedProductsOnCart = [...updatedProductsOnCart, { quantity: quantityValue, _id: product._id, product }];
       }
     } else {
-      updatedProductsOnCart = [{ quantity: quantityValue, product }];
+      updatedProductsOnCart = [{ quantity: quantityValue, _id: product._id, product }];
     }
     dispatch(setProductsAndStock(updatedProductsOnCart, updatedProducts, numberOfPages, currentPage));
-    setQuantityValue(1);
+    setQuantityValue(0);
     notify.show('Agregado al carrito!', 'success');
   };
 
@@ -98,7 +104,7 @@ const ProductCard = ({
           { viewStyle !== 'details' && <p>{price}</p> }
           { stock > 0 ? (
             <>
-              <Input placeholder="0" value={quantityValue} min="1" max={stock} onChange={handleChangeQuantity} type="number" />
+              <Input placeholder="0" value={quantityValue} min="0" max={stock} onChange={handleChangeQuantity} type="number" />
               <Button className="main-button btn-sm" onClick={handleClickAddToCart}>Agregar al carrito</Button>
             </>
           ) : (<Button className="btn-sm" disabled>Sin stock</Button>)}
